@@ -11,7 +11,7 @@ const getAllModels = async (req,res) => {
 
 const getModelById = async (req,res) => {
     const {id} = req.params;
-    //const model = await Model.findById({id});
+    const model = await Model.findById(id).exec();
     res.status(200).json({
             data: model,
             success: true,
@@ -39,10 +39,10 @@ const updateModel = async (req,res) => {
         });
 };
 
-const deleteModel = (req,res) => {
+const deleteModel = async (req,res) => {
     const {id} = req.params;
+    const model = await Model.findByIdAndDelete(id);
     res.status(200).json({
-            id,
             success: true,
             message: req.method + " - Request to Make endpoint",
         });

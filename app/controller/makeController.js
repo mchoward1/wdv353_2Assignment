@@ -9,10 +9,11 @@ const getAllMakes = async (req,res) => {
     });
 };
 
-const getMakeById = (req,res) => {
+const getMakeById = async (req,res) => {
     const {id} = req.params;
+    const make = await Make.findById(id).exec();
     res.status(200).json({
-            id,
+            data: make,
             success: true,
             message: req.method + " - Request to Make endpoint",
         });
@@ -38,10 +39,10 @@ const updateMake = async (req,res) => {
         });
 };
 
-const deleteMake = (req,res) => {
+const deleteMake = async (req,res) => {
     const {id} = req.params;
+    const make = await Make.findByIdAndDelete(id);
     res.status(200).json({
-            id,
             success: true,
             message: req.method + " - Request to Make endpoint",
         });
