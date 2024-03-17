@@ -5,7 +5,7 @@ const makeSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Please enter a make name."],
-        unique: true,
+        unique: [true, "You can only have 1 model with this name."],
         trim: true,
         maxlength: [20, "Make name is too long."]
     },

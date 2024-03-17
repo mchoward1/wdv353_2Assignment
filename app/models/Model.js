@@ -9,7 +9,7 @@ const modelSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Please enter a model name"],
-        unique: true,
+        unique: [true, "You can only have 1 make with this name."],
         trim: true,
         maxlength: [40, "Model name is too long."]
     },
