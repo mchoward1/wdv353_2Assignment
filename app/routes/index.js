@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const makeRoutes = require('./makeRouter');
+const makeRoutes = require('./makeRoutes');
+const modelRoutes = require('./modelRoutes');
 
 router.get("/", (req,res) => {
     res
@@ -9,4 +10,5 @@ router.get("/", (req,res) => {
 });
 
 router.use("/make", makeRoutes);
+router.use("/model", modelRoutes);
 module.exports = router;
