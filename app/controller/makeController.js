@@ -44,7 +44,7 @@ const createMake = async (req,res) => {
     try {
         const newMake = await Make.create(make);
         console.log("data >>>", newMake);
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             message: req.method + " - Request to Make endpoint",
         });

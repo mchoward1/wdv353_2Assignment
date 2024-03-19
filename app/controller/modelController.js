@@ -44,7 +44,7 @@ const createModel = async (req,res) => {
     try {
         const newModel = await Model.create(model);
         console.log("data >>>", newModel);
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             message: req.method + " - Request to Make endpoint",
     });
