@@ -2,7 +2,26 @@ const Model = require("../models/Model");
 
 const getAllModels = async (req,res) => {
     try {
-        const model = await Model.find({});
+        let querString = JSON.stringify(req.query);
+
+        querString = querString.replace(
+            /\b(gt|gte|lt|lte)\b/g,
+            (match) => `$${match}`
+        ); 
+
+        let query = Model.find(JSON.parse(querString));
+
+        if (req.query.select) {
+            const fields = req.query.select.split(',').join(' ');
+            query = Model.find({}).select(fields);
+        }
+
+        if (req.query.sort) {
+            const sortBy = req.query.sort.split(',').join(' ');
+            query = Model.find({}).sort(sortBy);
+        }
+
+        const model = await query;
         res.status(200).json({
                 data: model,
                 success: true,

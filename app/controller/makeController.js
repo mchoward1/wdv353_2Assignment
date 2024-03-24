@@ -2,7 +2,7 @@ const Make = require("../models/Make");
 
 const getAllMakes = async (req,res) => {
     try {
-        const make = await Make.find({});
+        const make = await Make.find(req.query);
         res.status(200).json({
                 data: make,
                 success: true,
