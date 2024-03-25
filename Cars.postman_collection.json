@@ -1,0 +1,489 @@
+{
+	"info": {
+		"_postman_id": "4022c105-0d68-44d4-875d-6323dbb4a802",
+		"name": "Cars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33411149"
+	},
+	"item": [
+		{
+			"name": "Make",
+			"item": [
+				{
+					"name": "Get All Makes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/make",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"make"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Make by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/make/65f712a8300e9bef5092f713",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"make",
+								"65f712a8300e9bef5092f713"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Make",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Land Rover\",\n    \"yearEstablished\": 1885,\n    \"country\": \"England\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/make",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"make"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Make",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"acuras\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/make/65f712a8300e9bef5092f713",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"make",
+								"65f712a8300e9bef5092f713"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Make",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/make/65f712a8300e9bef5092f713",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"make",
+								"65f712a8300e9bef5092f713"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Model",
+			"item": [
+				{
+					"name": "Get All Models",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/model",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Models Query Range",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response code of 200', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response should include data', () => {",
+									"    pm.response.to.have.jsonBody('data');",
+									"});",
+									"",
+									"pm.test('Returns proper response based on filter', () => {",
+									"    const [model] = pm.response.json().data;",
+									"    pm.expect(model).to.have.property(\"_id\");",
+									"    pm.expect(model).to.have.property('name');",
+									"    pm.expect(model.name).to.eq(\"Corolla\");",
+									"    pm.expect(model).to.have.property('yearReleased');",
+									"    pm.expect(model.yearReleased).to.eq(1966);",
+									"    pm.expect(model).to.have.property('type');",
+									"    pm.expect(model).to.have.property('inProduction');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/model?yearReleased[gte]=1960&yearReleased[lte]=1970",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model"
+							],
+							"query": [
+								{
+									"key": "yearReleased[gte]",
+									"value": "1960"
+								},
+								{
+									"key": "yearReleased[lte]",
+									"value": "1970"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Models Query Pagination",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response code of 200', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response should include data', () => {",
+									"    pm.response.to.have.jsonBody('data');",
+									"});",
+									"",
+									"pm.test('Response should include correct data', () => {",
+									"    const [model] = pm.response.json().data;",
+									"    pm.expect(model).to.have.property('type');",
+									"    pm.expect(model.type).to.eq(\"Truck\");",
+									"    pm.expect(model).to.have.property(\"_id\");",
+									"    pm.expect(model).to.have.property('name');",
+									"    pm.expect(model).to.have.property('yearReleased');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/model?type=Truck",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Truck"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Models Query Sort",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response code of 200', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response should include data', () => {",
+									"    pm.response.to.have.jsonBody('data');",
+									"});",
+									"",
+									"pm.test('Response should include correct data', () => {",
+									"    const entry1 = (pm.response.json().data[0].yearReleased);",
+									"    const entry2 = (pm.response.json().data[1].yearReleased);",
+									"    const entry3 = (pm.response.json().data[2].yearReleased);",
+									"    const entry4 = (pm.response.json().data[3].yearReleased);",
+									"    const entry5 = (pm.response.json().data[4].yearReleased);",
+									"    const entry6 = (pm.response.json().data[5].yearReleased);",
+									"    pm.expect(entry1 <= entry2);",
+									"    pm.expect(entry2 <= entry3);",
+									"    pm.expect(entry3 <= entry4);",
+									"    pm.expect(entry4 <= entry5);",
+									"    pm.expect(entry5 <= entry6);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/model?sort=yearReleased",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "yearReleased"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Models Query Select",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response code of 200', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response should include data', () => {",
+									"    pm.response.to.have.jsonBody('data');",
+									"});",
+									"",
+									"pm.test('Response should include only selected data', () => {",
+									"    const [model] = pm.response.json().data;",
+									"    pm.expect(model).to.have.property('name');",
+									"    pm.expect(model).to.have.property('inProduction');",
+									"    pm.expect(model).to.not.have.property('yearReleased');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/model?select=name,inProduction",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model"
+							],
+							"query": [
+								{
+									"key": "select",
+									"value": "name,inProduction"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Model By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/model/65f7084c57aae06c3848b177",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model",
+								"65f7084c57aae06c3848b177"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Model",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"make\": \"66004dd864d487952fe0ab93\",\n    \"name\": \"Discovery\",\n    \"type\": \"SUV\",\n    \"yearReleased\": 1989,\n    \"inProduction\": \"Yes\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/model",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Model",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"yearReleased\": 1997}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/model/65f71331300e9bef5092f71f",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model",
+								"65f71331300e9bef5092f71f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Model",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/model/65f71331300e9bef5092f71f",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"model",
+								"65f71331300e9bef5092f71f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": ""
+		}
+	]
+}
