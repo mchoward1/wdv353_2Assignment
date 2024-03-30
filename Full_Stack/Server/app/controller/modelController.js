@@ -47,7 +47,7 @@ const getModelById = async (req,res) => {
     try {
         const model = await Model.findById(id)
         .populate("make", "name")
-        .select("name type yearReleased type inProduction")
+        .select("name type yearReleased inProduction")
         .exec();
         res.status(200).json({
                 data: model,
