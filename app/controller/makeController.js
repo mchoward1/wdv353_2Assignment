@@ -1,4 +1,5 @@
 const Make = require("../models/Make");
+const Messages = require("../messages/messages")
 
 const getAllMakes = async (req,res) => {
     try {
@@ -11,10 +12,10 @@ const getAllMakes = async (req,res) => {
     } catch (error) {
         if (error.name == "ValidatorError") {
             console.error("Error Validating!", error);
-            res.status(422).json(error);
+            res.status(422).json({message: Messages.failed_to_populate});
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.failed_to_populate});
         };
     };
 };
@@ -31,10 +32,10 @@ const getMakeById = async (req,res) => {
     } catch (error) {
         if (error.name == "ValidatorError") {
             console.error("Error Validating!", error);
-            res.status(422).json(error);
+            res.status(422).json({message: Messages.make_not_found});
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.make_not_found});
         };
     };
 };
@@ -51,10 +52,10 @@ const createMake = async (req,res) => {
     } catch (error) {
         if (error.name == "ValidatorError") {
             console.error("Error Validating!", error);
-            res.status(422).json(error);
+            res.status(422).json({message: Messages.unable_to_create});
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.unable_to_create});
         };
     };
 };
@@ -71,10 +72,10 @@ const updateMake = async (req,res) => {
     } catch (error) {
         if (error.name == "ValidatorError") {
             console.error("Error Validating!", error);
-            res.status(422).json(error);
+            res.status(422).json({message: Messages.unable_to_update});
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.unable_to_update});
         };
     };
 };
@@ -90,10 +91,10 @@ const deleteMake = async (req,res) => {
     } catch (error) {
         if (error.name == "ValidatorError") {
             console.error("Error Validating!", error);
-            res.status(422).json(error);
+            res.status(422).json({message: Messages.unable_to_delete});
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.unable_to_delete});
         };
     };
 };

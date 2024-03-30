@@ -1,4 +1,6 @@
 const Model = require("../models/Model");
+const Make = require('../models/Make');
+const Messages = require("../messages/messages");
 
 const getAllModels = async (req,res) => {
     try {
@@ -21,7 +23,9 @@ const getAllModels = async (req,res) => {
             query = Model.find({}).sort(sortBy);
         }
 
-        const model = await query;
+        const model = await query
+            .populate("make", "name")
+            .select("name type yearReleased type inProduction");
         res.status(200).json({
                 data: model,
                 success: true,
@@ -30,10 +34,10 @@ const getAllModels = async (req,res) => {
     } catch (error) {
         if (error.name == "ValidatorError") {
             console.error("Error Validating!", error);
-            res.status(422).json(error);
+            res.status(422).json({message: Messages.failed_to_populate});
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.failed_to_populate});
         };
     };
 };
@@ -41,7 +45,10 @@ const getAllModels = async (req,res) => {
 const getModelById = async (req,res) => {
     const {id} = req.params;
     try {
-        const model = await Model.findById(id).exec();
+        const model = await Model.findById(id)
+        .populate("make", "name")
+        .select("name type yearReleased type inProduction")
+        .exec();
         res.status(200).json({
                 data: model,
                 success: true,
@@ -53,7 +60,7 @@ const getModelById = async (req,res) => {
             res.status(422).json(error);
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.model_not_found});
         };
     }; 
 };
@@ -70,10 +77,10 @@ const createModel = async (req,res) => {
     } catch (error) {
         if (error.name == "ValidatorError") {
             console.error("Error Validating!", error);
-            res.status(422).json(error);
+            res.status(422).json({message: Messages.unable_to_create});
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.unable_to_create});
         };
     };
 };
@@ -90,10 +97,10 @@ const updateModel = async (req,res) => {
     } catch (error) {
         if (error.name == "ValidatorError") {
             console.error("Error Validating!", error);
-            res.status(422).json(error);
+            res.status(422).json({message: Messages.unable_to_update});
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.unable_to_update});
         };
     };
 };
@@ -112,7 +119,7 @@ const deleteModel = async (req,res) => {
             res.status(422).json(error);
         } else {
             console.error(error);
-            res.status(500).json(error);
+            res.status(500).json({message: Messages.unable_to_delete});
         };
     };
 };
